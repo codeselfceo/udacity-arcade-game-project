@@ -28,15 +28,14 @@ class Enemy extends Piece {
     }
 }
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
 /**
  * @description Our amazing player
  */
 class Player extends Piece {
     constructor() {
         super(`images/char-boy.png`);
+        this.x = 100;
+        this.y = 300;
     }
 
     // Handle Input
@@ -61,22 +60,34 @@ class Player extends Piece {
 
     // Move up
     _moveUp() {
+        // Prevents player going outside the box
+        if (this.y === -20) { return; }
 
+        this.y = (this.y >= 380) ? this.y - 80 : this.y - 80;
     }
 
     // Move down
     _moveDown() {
+        // Prevents player going outside the box
+        if (this.y === 380) { return; }
 
+        this.y = (this.y >= 300) ? 380 : this.y + 80;
     }
 
     // Move right
     _moveRight() {
+        // Prevents player going outside the box
+        if (this.x === 406) { return; }
 
+        this.x += 102;
     }
 
     // Move left
     _moveLeft() {
-
+        // Prevents player going outside the box
+        if (this.x === -2) { return; }
+        
+        this.x -= 102;
     }
 }
 
@@ -84,6 +95,15 @@ class Player extends Piece {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+const enemy1 = new Enemy();
+const enemy2 = new Enemy();
+const enemy3 = new Enemy();
+const enemy4 = new Enemy();
+const enemy5 = new Enemy();
+const enemy6 = new Enemy();
+
+const [...allEnemies] = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
+const player = new Player();
 
 
 
