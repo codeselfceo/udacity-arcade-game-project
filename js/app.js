@@ -1,46 +1,61 @@
 /**
- * Pieces class
- * @description Due to Enemy and Player share update() and render() functions and both are 'pieces' of the game, this class will contain those 2 main functions.
+ * @description Enemy our player must avoid
  */
-class Piece {
-    constructor(sprite) {
-        this.sprite = sprite;
+class Enemy {
+    constructor() {
+        this.sprite = `images/enemy-bug.png`;
+        
+        // Initializes bugs in random positions
+        this.randomYPositions = [220, 140, 60];
+        this.x = -8;
+        this.y = this.randomYPositions[Math.floor(Math.random() * 3)];
+        this.random = Math.floor(Math.random() * 6);
     }
 
-    // Update the piece's position, required method for game
+    // Update the enemey's position, required method for game
     // Parameter: dt, a time delta between ticks
     update(dt) {
 
-	}
-	
-	// Draw the piece on the screen, required method for game
+    }
+
+    // Draw the enemy on the screen, required method for game
 	render() {
+        setTimeout(() => {
+            if (this.x >= 420) {
+                this.y = this.randomYPositions[Math.floor(Math.random() * 3)];
+                this.x = -8;
+                this.random = Math.floor(Math.random() * 6);
+            }
+            this.x += this.random + 1;
+        });
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
 }
 
 /**
- * @description Enemy our player must avoid
- */
-class Enemy extends Piece {
-    constructor() {
-        super(`images/enemy-bug.png`);
-    }
-}
-
-/**
  * @description Our amazing player
  */
-class Player extends Piece {
+class Player {
     constructor() {
-        super(`images/char-boy.png`);
+        this.sprite = `images/char-boy.png`;
 
         // Initializes the player in a random position
-        const randomXPositions = [-2, 100, 202, 304];
-        const randomYPositions = [380, 300];
-        this.x = randomXPositions[Math.floor(Math.random() * 4)];
-        this.y = randomYPositions[Math.floor(Math.random() *  2)];
+        this.randomXPositions = [-2, 100, 202, 304];
+        this.randomYPositions = [380, 300];
+        this.x = this.randomXPositions[Math.floor(Math.random() * 4)];
+        this.y = this.randomYPositions[Math.floor(Math.random() *  2)];
     }
+
+    // Update the player's position, required method for game
+    // Parameter: dt, a time delta between ticks
+    update() {
+        
+    }
+    
+    // Draw the player on the screen, required method for game
+	render() {
+		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+	}
 
     // Handle Input
     handleInput(dir) {
@@ -103,10 +118,10 @@ const enemy1 = new Enemy();
 const enemy2 = new Enemy();
 const enemy3 = new Enemy();
 const enemy4 = new Enemy();
-const enemy5 = new Enemy();
-const enemy6 = new Enemy();
+// const enemy5 = new Enemy();
+// const enemy6 = new Enemy();
 
-const [...allEnemies] = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
+const [...allEnemies] = [enemy1, enemy2, enemy3, enemy4];//, enemy5, enemy6];
 const player = new Player();
 
 
