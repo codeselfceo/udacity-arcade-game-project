@@ -34,8 +34,12 @@ class Enemy extends Piece {
 class Player extends Piece {
     constructor() {
         super(`images/char-boy.png`);
-        this.x = 100;
-        this.y = 300;
+
+        // Initializes the player in a random position
+        const randomXPositions = [-2, 100, 202, 304];
+        const randomYPositions = [380, 300];
+        this.x = randomXPositions[Math.floor(Math.random() * 4)];
+        this.y = randomYPositions[Math.floor(Math.random() *  2)];
     }
 
     // Handle Input
@@ -86,7 +90,7 @@ class Player extends Piece {
     _moveLeft() {
         // Prevents player going outside the box
         if (this.x === -2) { return; }
-        
+
         this.x -= 102;
     }
 }
