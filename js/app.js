@@ -147,10 +147,8 @@ const enemy1 = new Enemy();
 const enemy2 = new Enemy();
 const enemy3 = new Enemy();
 const enemy4 = new Enemy();
-const enemy5 = new Enemy();
-const enemy6 = new Enemy();
 
-const [...allEnemies] = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
+const [...allEnemies] = [enemy1, enemy2, enemy3, enemy4];
 const player = new Player();
 
 
