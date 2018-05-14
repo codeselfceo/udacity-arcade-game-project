@@ -7,7 +7,7 @@ This is the third project for [Front-End Nanodegree](https://www.udacity.com/cou
 2. Try to reach the water without touching any tick.
 3. Have fun!
 
-## Play here
+## Take a look
 You can take a look and have fun [here](https://codeselfceo.github.io/udacity-arcade-game-project/)!
 
 ## Technologies used
@@ -19,4 +19,4 @@ You can take a look and have fun [here](https://codeselfceo.github.io/udacity-ar
 This project does not have dependencies. It only uses pure JavaScript for its functionality.
 
 
-#### Code by [Luis Pérez](https://github.com/codeselfceo)
+#### Coded by [Luis Pérez](https://github.com/codeselfceo)
