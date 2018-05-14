@@ -21,11 +21,14 @@ var Engine = (function(global) {
     var doc = global.document,
         win = global.window,
         canvas = doc.createElement('canvas'),
+        selector = doc.getElementById('avatarSelector'),
+        scores = doc.getElementById('scores'),
         ctx = canvas.getContext('2d'),
         lastTime;
 
     canvas.width = 505;
     canvas.height = 606;
+    canvas.classList.add('hidden', 'fadeIn');
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -63,9 +66,28 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
-        reset();
+        canvas.classList.remove('hidden');
+        scores.classList.remove('hidden');
+        selector.classList.add('hidden');
         lastTime = Date.now();
         main();
+    }
+
+    /**
+     * Check for player and bugs collisions
+     * Update score and resets player position
+     */
+    function checkCollisions() {
+        const playerXPos = player.x;
+        const playerYPos = player.y;
+        allEnemies.forEach((enemy) => {
+            if(playerXPos >= enemy.x -40 && playerXPos <= enemy.x + 40){
+                if(playerYPos >= enemy.y -40 && playerYPos <=  enemy.y+40 ){
+                    player.updateScore('substract');
+                    player.resetPosition();
+                }
+            }
+        });
     }
 
     /* This function is called by main (our game loop) and itself calls all
@@ -79,7 +101,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -161,7 +183,11 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        canvas.classList.add('hidden');
+        scores.classList.add('hidden');
+        selector.classList.remove('hidden');
+        player.resetPosition();
+        player.resetScore();
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -173,13 +199,47 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
     ]);
-    Resources.onReady(init);
+    // Resources.onReady();
 
     /* Assign the canvas' context object to the global variable (the window
      * object when run in a browser) so that developers can use it more easily
      * from within their app.js files.
      */
     global.ctx = ctx;
+
+    // Listeners to pick avatar
+    document.getElementById('charBoy').addEventListener('click', function() {
+        player.sprite = `images/char-boy.png`;
+        init();
+    });
+
+    document.getElementById('catGirl').addEventListener('click', function() {
+        player.sprite = 'images/char-cat-girl.png';
+        init();
+    });
+
+    document.getElementById('hornGirl').addEventListener('click', function() {
+        player.sprite = 'images/char-horn-girl.png';
+        init();
+    });
+
+    document.getElementById('pinkGirl').addEventListener('click', function() {
+        player.sprite = 'images/char-pink-girl.png';
+        init();
+    });
+
+    document.getElementById('princessGirl').addEventListener('click', function() {
+        player.sprite = 'images/char-princess-girl.png';
+        init();
+    });
+
+    document.getElementById('resetButton').addEventListener('click', function() {
+        reset();
+    });
 })(this);

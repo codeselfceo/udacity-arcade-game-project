@@ -7,7 +7,7 @@ class Enemy {
         
         // Initializes bugs in random positions
         this.randomYPositions = [220, 140, 60];
-        this.x = -8;
+        this.x = -10;
         this.y = this.randomYPositions[Math.floor(Math.random() * 3)];
         this.random = Math.floor(Math.random() * 6);
     }
@@ -15,20 +15,17 @@ class Enemy {
     // Update the enemey's position, required method for game
     // Parameter: dt, a time delta between ticks
     update(dt) {
-
+        if (this.x >= 520) {
+            this.y = this.randomYPositions[Math.floor(Math.random() * 3)];
+            this.x = -10;
+            this.random = Math.floor(Math.random() * 6);
+        }
+        this.x += this.random + 1;
     }
 
     // Draw the enemy on the screen, required method for game
 	render() {
-        setTimeout(() => {
-            if (this.x >= 420) {
-                this.y = this.randomYPositions[Math.floor(Math.random() * 3)];
-                this.x = -8;
-                this.random = Math.floor(Math.random() * 6);
-            }
-            this.x += this.random + 1;
-        });
-		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
 }
 
@@ -38,6 +35,8 @@ class Enemy {
 class Player {
     constructor() {
         this.sprite = `images/char-boy.png`;
+        this.winsScore = 0;
+        this.lossesScore = 0;
 
         // Initializes the player in a random position
         this.randomXPositions = [-2, 100, 202, 304];
@@ -49,7 +48,37 @@ class Player {
     // Update the player's position, required method for game
     // Parameter: dt, a time delta between ticks
     update() {
-        
+        if (this.y === -20) {
+            this.updateScore('add');
+            this.resetPosition();
+        }
+    }
+
+    // Reset player position 
+    resetPosition() {
+        this.x = this.randomXPositions[Math.floor(Math.random() * 4)];
+        this.y = this.randomYPositions[Math.floor(Math.random() *  2)];
+    }
+
+    // Reset game score
+    resetScore() {
+        const winsScore = document.getElementById('winScore');
+        const lossesScore = document.getElementById('lossesScore');
+        winsScore.textContent = 0;
+        lossesScore.textContent = 0;
+    }
+
+    // Update gaming score
+    updateScore(action) {
+        const winsScore = document.getElementById('winScore');
+        const lossesScore = document.getElementById('lossesScore');
+        if (action === 'add') {
+            this.winsScore += 1;
+            winsScore.textContent = this.winsScore;
+        } else {
+            this.lossesScore += 1;
+            lossesScore.textContent = this.lossesScore;
+        }
     }
     
     // Draw the player on the screen, required method for game
@@ -118,10 +147,10 @@ const enemy1 = new Enemy();
 const enemy2 = new Enemy();
 const enemy3 = new Enemy();
 const enemy4 = new Enemy();
-// const enemy5 = new Enemy();
-// const enemy6 = new Enemy();
+const enemy5 = new Enemy();
+const enemy6 = new Enemy();
 
-const [...allEnemies] = [enemy1, enemy2, enemy3, enemy4];//, enemy5, enemy6];
+const [...allEnemies] = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6];
 const player = new Player();
 
 
